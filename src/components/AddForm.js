@@ -1,14 +1,11 @@
 function AddForm() {
 	return (
-		<form className="m-8 flex h-10 w-1/3">
-			<input
-				type="text"
-				required
-				className="h-full w-3/4 rounded-tr-none rounded-br-none border-t-2 border-b-2 border-l-2 border-r-0 border-purple-700 bg-[#25273c] text-white"
-			/>
+		<form className="mb-4 flex h-[40%] w-1/3 flex-col gap-4">
+			<input type="text" required placeholder="Heading" className="h-1/4" />
+			<textarea className="h-2/4 resize-none" placeholder="Description" />
 			<button
 				type="submit"
-				className="h-full w-1/4 rounded rounded-tl-none rounded-bl-none border-t-2 border-r-2 border-b-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500"
+				className="h-1/6 w-1/4 rounded border-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500 disabled:cursor-not-allowed disabled:hover:bg-purple-700"
 			>
 				Add
 			</button>
