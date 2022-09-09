@@ -1,10 +1,12 @@
 import SummaryDetails from "./SummaryDetails";
 import SummaryIcons from "./SummaryIcons";
 
-function SummaryItem() {
+function SummaryItem(props) {
+	const heading = props.heading;
+	const isFinished = props.isFinished;
 	return (
 		<div className="flex items-center gap-4 p-4">
-			<SummaryDetails />
+			<SummaryDetails heading={heading} isFinished={isFinished} />
 			<SummaryIcons />
 		</div>
 	);
