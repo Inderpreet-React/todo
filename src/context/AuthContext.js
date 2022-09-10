@@ -21,23 +21,23 @@ export function AuthProvider({ children }) {
 		}
 	});
 
-	useEffect(() => {
-		async function fetchInitialData() {
-			const newTodo = [];
-			const querySnapshot = await getDocs(collection(db, "todo"));
-			querySnapshot.forEach((doc) => {
-				console.log(`${doc.id} => ${doc.data().heading}`);
-				newTodo.push({
-					id: doc.id,
-					heading: doc.data().heading,
-					isFinished: doc.data().isFinished,
-				});
+	async function fetchTodoList() {
+		const newTodo = [];
+		const querySnapshot = await getDocs(collection(db, "todo"));
+		querySnapshot.forEach((doc) => {
+			console.log(`${doc.id} => ${doc.data().heading}`);
+			newTodo.push({
+				id: doc.id,
+				heading: doc.data().heading,
+				isFinished: doc.data().isFinished,
 			});
-			setTodoList(newTodo);
-		}
+		});
+		setTodoList(newTodo);
+	}
 
+	useEffect(() => {
 		if (currentUser) {
-			fetchInitialData();
+			fetchTodoList();
 		} else {
 			setTodoList([]);
 		}
@@ -48,6 +48,7 @@ export function AuthProvider({ children }) {
 		setCurrentUser,
 		todoList,
 		setTodoList,
+		fetchTodoList,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
