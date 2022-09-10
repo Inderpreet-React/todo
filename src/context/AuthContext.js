@@ -31,7 +31,6 @@ export function AuthProvider({ children }) {
 		const newTodo = [];
 		const querySnapshot = await getDocs(collection(db, "todo"));
 		querySnapshot.forEach((doc) => {
-			console.log(`${doc.id} => ${doc.data().heading}`);
 			newTodo.push({
 				id: doc.id,
 				heading: doc.data().heading,
