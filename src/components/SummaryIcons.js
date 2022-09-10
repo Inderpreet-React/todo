@@ -1,16 +1,23 @@
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
 function SummaryIcons(props) {
 	const { deleteTodo } = useAuth();
 	const { fetchTodoList } = useAuth();
 	const id = props.id;
+	const [loading, setLoading] = useState(false);
 
 	const svgClasses =
 		"h-6 w-6 cursor-pointer text-purple-100 hover:text-purple-500";
 
 	function deleteHandler() {
-		deleteTodo(id);
-		fetchTodoList();
+		if (!loading) {
+			setLoading(true);
+			setLoading(true);
+			deleteTodo(id);
+			fetchTodoList();
+			setLoading(false);
+		}
 	}
 
 	return (
@@ -37,7 +44,7 @@ function SummaryIcons(props) {
 				viewBox="0 0 24 24"
 				strokeWidth={1.5}
 				stroke="currentColor"
-				className={svgClasses}
+				className={`${svgClasses} ${loading ? "cursor-not-allowed" : ""}`}
 				onClick={deleteHandler}
 			>
 				<path

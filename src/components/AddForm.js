@@ -1,22 +1,32 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 
 function AddForm() {
 	const heading = useRef();
+	const [loading, setLoading] = useState(false);
 	const { currentUser } = useAuth();
 	const { fetchTodoList } = useAuth();
 
 	async function AddDataHandler() {
-		try {
-			await addDoc(collection(db, "todo"), {
-				heading: heading.current.value,
-				isFinished: false,
-			});
-			fetchTodoList();
-		} catch (error) {
-			console.log(error);
+		if (!loading) {
+			if (!(heading.current.value.trim().length === 0)) {
+				setLoading(true);
+				try {
+					await addDoc(collection(db, "todo"), {
+						heading: heading.current.value,
+						isFinished: false,
+					});
+					fetchTodoList();
+				} catch (error) {
+					console.log(error);
+				} finally {
+					setLoading(false);
+				}
+			} else {
+				alert("Heading cannot be empty");
+			}
 		}
 	}
 
@@ -36,7 +46,7 @@ function AddForm() {
 				className="h-12"
 			/>
 			<button
-				disabled={!currentUser ? true : false}
+				disabled={(!currentUser ? true : false) || loading}
 				type="submit"
 				className="h-10 w-1/4 rounded border-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500 disabled:cursor-not-allowed disabled:hover:bg-purple-700"
 			>
