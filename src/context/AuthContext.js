@@ -1,7 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import {
+	collection,
+	doc,
+	getDocs,
+	updateDoc,
+	deleteDoc,
+} from "firebase/firestore";
 
 const AuthContext = React.createContext();
 
@@ -45,6 +51,14 @@ export function AuthProvider({ children }) {
 		setTodoList(newTodo);
 	}
 
+	async function deleteTodo(id) {
+		try {
+			await deleteDoc(doc(db, "todo", id));
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	useEffect(() => {
 		if (currentUser) {
 			fetchTodoList();
@@ -60,6 +74,7 @@ export function AuthProvider({ children }) {
 		setTodoList,
 		fetchTodoList,
 		isFinishedupdate,
+		deleteTodo,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

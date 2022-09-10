@@ -7,7 +7,7 @@ function SummaryItem(props) {
 	return (
 		<div className="flex items-center gap-4 p-4">
 			<SummaryDetails id={props.id} heading={heading} isFinished={isFinished} />
-			<SummaryIcons />
+			<SummaryIcons id={props.id} heading={heading} />
 		</div>
 	);
 }

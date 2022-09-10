@@ -1,24 +1,21 @@
-function SummaryIcons() {
+import { useAuth } from "../context/AuthContext";
+
+function SummaryIcons(props) {
+	const { deleteTodo } = useAuth();
+	const { fetchTodoList } = useAuth();
+	const id = props.id;
+
 	const svgClasses =
 		"h-6 w-6 cursor-pointer text-purple-100 hover:text-purple-500";
 
+	function deleteHandler() {
+		deleteTodo(id);
+		fetchTodoList();
+	}
+
 	return (
 		<div className="flex w-1/3 items-center justify-end gap-4">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 24 24"
-				strokeWidth={1.5}
-				stroke="currentColor"
-				className={svgClasses}
-			>
-				<path
-					strokeLinecap="round"
-					strokeLinejoin="round"
-					d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
-				/>
-			</svg>
-
+			{/* update svg */}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -33,6 +30,7 @@ function SummaryIcons() {
 					d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
 				/>
 			</svg>
+			{/* delete svg */}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -40,6 +38,7 @@ function SummaryIcons() {
 				strokeWidth={1.5}
 				stroke="currentColor"
 				className={svgClasses}
+				onClick={deleteHandler}
 			>
 				<path
 					strokeLinecap="round"
