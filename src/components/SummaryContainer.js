@@ -6,7 +6,7 @@ function SummaryContainer() {
 	const { todoList } = useAuth();
 
 	return (
-		<div className="container h-[50%] w-1/3 divide-y divide-purple-300 overflow-auto rounded border-2 border-purple-700 bg-[#25273c] p-4">
+		<div className="container h-[70%] w-1/3 divide-y divide-purple-300 overflow-auto rounded border-2 border-purple-700 bg-[#25273c] p-4">
 			{currentUser ? (
 				todoList.map((data) => (
 					<SummaryItem

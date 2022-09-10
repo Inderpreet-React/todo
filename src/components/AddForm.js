@@ -22,7 +22,7 @@ function AddForm() {
 
 	return (
 		<form
-			className="mb-4 flex h-[40%] w-1/3 flex-col gap-4"
+			className="flex h-[30%] w-1/3 flex-col justify-center gap-4"
 			onSubmit={(e) => {
 				e.preventDefault();
 				AddDataHandler();
@@ -33,13 +33,12 @@ function AddForm() {
 				type="text"
 				required
 				placeholder="Heading"
-				className="h-1/4"
+				className="h-12"
 			/>
-			<textarea className="h-2/4 resize-none" placeholder="Description" />
 			<button
 				disabled={!currentUser ? true : false}
 				type="submit"
-				className="h-1/6 w-1/4 rounded border-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500 disabled:cursor-not-allowed disabled:hover:bg-purple-700"
+				className="h-10 w-1/4 rounded border-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500 disabled:cursor-not-allowed disabled:hover:bg-purple-700"
 			>
 				Add
 			</button>
