@@ -6,7 +6,7 @@ function SummaryItem(props) {
 	const isFinished = props.isFinished;
 	return (
 		<div className="flex items-center gap-4 p-4">
-			<SummaryDetails heading={heading} isFinished={isFinished} />
+			<SummaryDetails id={props.id} heading={heading} isFinished={isFinished} />
 			<SummaryIcons />
 		</div>
 	);

@@ -11,6 +11,7 @@ function SummaryContainer() {
 				todoList.map((data) => (
 					<SummaryItem
 						key={data["id"]}
+						id={data["id"]}
 						heading={data["heading"]}
 						isFinished={data["isFinished"]}
 					/>

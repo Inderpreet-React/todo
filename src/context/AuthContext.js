@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 
 const AuthContext = React.createContext();
 
@@ -20,6 +20,16 @@ export function AuthProvider({ children }) {
 			setCurrentUser(false);
 		}
 	});
+
+	async function isFinishedupdate(id, isFinished) {
+		const docRef = doc(db, "todo", id);
+		const updatedData = { isFinished: isFinished };
+		try {
+			await updateDoc(docRef, updatedData);
+		} catch (e) {
+			console.log(e);
+		}
+	}
 
 	async function fetchTodoList() {
 		const newTodo = [];
@@ -49,6 +59,7 @@ export function AuthProvider({ children }) {
 		todoList,
 		setTodoList,
 		fetchTodoList,
+		isFinishedupdate,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
