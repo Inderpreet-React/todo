@@ -27,16 +27,6 @@ export function AuthProvider({ children }) {
 		}
 	});
 
-	async function isFinishedupdate(id, isFinished) {
-		const docRef = doc(db, "todo", id);
-		const updatedData = { isFinished: isFinished };
-		try {
-			await updateDoc(docRef, updatedData);
-		} catch (e) {
-			console.log(e);
-		}
-	}
-
 	async function fetchTodoList() {
 		const newTodo = [];
 		const querySnapshot = await getDocs(collection(db, "todo"));
@@ -49,6 +39,28 @@ export function AuthProvider({ children }) {
 			});
 		});
 		setTodoList(newTodo);
+	}
+
+	async function isFinishedupdate(id, isFinished) {
+		const docRef = doc(db, "todo", id);
+		const updatedData = { isFinished: isFinished };
+		try {
+			await updateDoc(docRef, updatedData);
+		} catch (e) {
+			console.log(e);
+		}
+	}
+
+	async function updateHeading(id, heading) {
+		const docRef = doc(db, "todo", id);
+		const updatedData = { heading: heading };
+		try {
+			await updateDoc(docRef, updatedData);
+		} catch (e) {
+			console.log(e);
+		} finally {
+			fetchTodoList();
+		}
 	}
 
 	async function deleteTodo(id) {
@@ -74,6 +86,7 @@ export function AuthProvider({ children }) {
 		setTodoList,
 		fetchTodoList,
 		isFinishedupdate,
+		updateHeading,
 		deleteTodo,
 	};
 

@@ -7,20 +7,6 @@ function SummaryContainer() {
 
 	return (
 		<div className="container relative h-[70%] w-1/3 divide-y divide-purple-300 overflow-auto rounded border-2 border-purple-700 bg-[#25273c] p-4">
-			{currentUser ? (
-				todoList.map((data) => (
-					<SummaryItem
-						key={data["id"]}
-						id={data["id"]}
-						heading={data["heading"]}
-						isFinished={data["isFinished"]}
-					/>
-				))
-			) : (
-				<p className="flex h-full items-center justify-center text-2xl text-white">
-					Nothing to see here 😈
-				</p>
-			)}
 			{currentUser && todoList.length === 0 ? (
 				<div className="absolute top-0 left-0 flex h-full w-full items-center justify-center rounded bg-loadingbg">
 					<div role="status">
@@ -43,6 +29,20 @@ function SummaryContainer() {
 					</div>
 				</div>
 			) : null}
+			{currentUser ? (
+				todoList.map((data) => (
+					<SummaryItem
+						key={data["id"]}
+						id={data["id"]}
+						heading={data["heading"]}
+						isFinished={data["isFinished"]}
+					/>
+				))
+			) : (
+				<p className="flex h-full items-center justify-center text-2xl text-white">
+					Nothing to see here 😈
+				</p>
+			)}
 		</div>
 	);
 }
