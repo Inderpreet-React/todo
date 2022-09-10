@@ -13,7 +13,6 @@ function SummaryIcons(props) {
 	function deleteHandler() {
 		if (!loading) {
 			setLoading(true);
-			setLoading(true);
 			deleteTodo(id);
 			fetchTodoList();
 			setLoading(false);
