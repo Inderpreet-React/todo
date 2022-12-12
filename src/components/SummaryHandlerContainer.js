@@ -36,7 +36,7 @@ function SummaryHandlerContainer() {
 		}
 
 		return (
-			<div className="container m-4 flex h-[10%] w-1/3 items-center justify-center rounded border-2 border-purple-700 p-6">
+			<div className="container m-4 flex h-[10%] w-4/5 items-center justify-center rounded border-2 border-purple-700 p-6 md:w-1/3">
 				<span
 					className="cursor-pointer text-xl text-white underline decoration-purple-500 decoration-2 underline-offset-2"
 					onClick={signOutHandler}

@@ -32,7 +32,7 @@ function AddForm() {
 
 	return (
 		<form
-			className="flex h-[30%] w-1/3 flex-col justify-center gap-4"
+			className="flex h-[30%] w-full flex-col justify-center gap-4 md:w-1/3"
 			onSubmit={(e) => {
 				e.preventDefault();
 				AddDataHandler();

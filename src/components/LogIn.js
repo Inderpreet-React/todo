@@ -38,7 +38,7 @@ function LogIn(props) {
 					e.stopPropagation();
 				}}
 				onSubmit={submitHandler}
-				className="flex h-2/4 w-1/3 flex-col justify-evenly rounded border-2 border-purple-600 bg-[#181824] p-4 mix-blend-darken"
+				className="flex h-2/4 w-full flex-col justify-evenly rounded border-2 border-purple-600 bg-[#181824] p-4 mix-blend-darken md:w-1/3"
 			>
 				<div className="flex">
 					<span className="w-1/3 text-xl text-white" required>
@@ -52,7 +52,7 @@ function LogIn(props) {
 				</div>
 				<button
 					type="submit"
-					className="h-10 w-1/4 self-end rounded border-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500"
+					className="h-10 w-4/5 self-end rounded border-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500 md:w-1/4"
 				>
 					Log In
 				</button>

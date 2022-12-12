@@ -6,7 +6,7 @@ function SummaryContainer() {
 	const { todoList } = useAuth();
 
 	return (
-		<div className="container relative h-[70%] w-1/3 divide-y divide-purple-300 overflow-auto rounded border-2 border-purple-700 bg-[#25273c] p-4">
+		<div className="container relative h-[70%] w-full divide-y divide-purple-300 overflow-auto rounded border-2 border-purple-700 bg-[#25273c] p-4 md:w-1/3">
 			{currentUser && todoList.length === 0 ? (
 				<div className="absolute top-0 left-0 flex h-full w-full items-center justify-center rounded bg-loadingbg">
 					<div role="status">

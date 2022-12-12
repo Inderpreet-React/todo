@@ -28,7 +28,7 @@ function SummaryIcons(props) {
 	}
 
 	return (
-		<div className="flex w-1/3 items-center justify-end gap-4">
+		<div className="flex w-full items-center justify-end gap-4 md:w-1/3">
 			{/* update svg */}
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
