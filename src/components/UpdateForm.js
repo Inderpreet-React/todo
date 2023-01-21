@@ -4,7 +4,7 @@ import { useRef } from "react";
 export function UpdateForm(props) {
 	const showUpdateForm = props.showUpdateForm;
 	const setShowUpdateForm = props.setShowUpdateForm;
-	const { updateHeading } = useAuth();
+	const { updateHeading, deleteTodo } = useAuth();
 	const headingValue = useRef();
 	const id = props.id;
 
@@ -19,7 +19,8 @@ export function UpdateForm(props) {
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
-					updateHeading(id, headingValue.current.value);
+					updateHeading(headingValue.current.value);
+					deleteTodo(id);
 					setShowUpdateForm(false);
 				}}
 				className="flex gap-4"

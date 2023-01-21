@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useAuth } from "../context/AuthContext";
 
@@ -14,10 +14,11 @@ function AddForm() {
 			if (!(heading.current.value.trim().length === 0)) {
 				setLoading(true);
 				try {
-					await addDoc(collection(db, "todo"), {
-						heading: heading.current.value,
-						isFinished: false,
-					});
+					await setDoc(
+						doc(db, "todo", currentUser.uid),
+						{ [heading.current.value]: false },
+						{ merge: true }
+					);
 					fetchTodoList();
 				} catch (error) {
 					console.log(error);

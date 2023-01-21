@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import {
-	collection,
 	doc,
-	getDocs,
 	updateDoc,
 	deleteDoc,
+	setDoc,
+	getDoc,
+	deleteField,
 } from "firebase/firestore";
 
 const AuthContext = React.createContext();
@@ -17,7 +18,7 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
 	const [currentUser, setCurrentUser] = useState(false);
-	const [todoList, setTodoList] = useState([]);
+	const [todoList, setTodoList] = useState(false);
 
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
@@ -28,33 +29,44 @@ export function AuthProvider({ children }) {
 	});
 
 	async function fetchTodoList() {
-		const newTodo = [];
-		const querySnapshot = await getDocs(collection(db, "todo"));
-		querySnapshot.forEach((doc) => {
-			newTodo.push({
-				id: doc.id,
-				heading: doc.data().heading,
-				isFinished: doc.data().isFinished,
-			});
-		});
-		setTodoList(newTodo);
+		const newTodo = {};
+		const docRef = doc(db, "todo", currentUser.uid);
+		const docSnap = await getDoc(docRef);
+		if (docSnap.exists()) {
+			const todoData = { ...docSnap.data() };
+			delete todoData["joiningDate"];
+			console.log(todoData);
+			if (Object.keys(todoData).length > 0) {
+				console.log(todoData);
+				for (const [key, value] of Object.entries(todoData)) {
+					console.log(key, value);
+					newTodo[key] = value;
+				}
+				setTodoList(newTodo);
+			} else {
+				console.log("empty list");
+				setTodoList(false);
+			}
+		} else {
+			setTodoList(false);
+			return;
+		}
 	}
 
 	async function isFinishedupdate(id, isFinished) {
-		const docRef = doc(db, "todo", id);
-		const updatedData = { isFinished: isFinished };
+		const todoRef = doc(db, "todo", currentUser.uid);
+		const updatedData = { [id]: isFinished };
 		try {
-			await updateDoc(docRef, updatedData);
+			await updateDoc(todoRef, updatedData);
 		} catch (e) {
 			console.log(e);
 		}
 	}
 
-	async function updateHeading(id, heading) {
-		const docRef = doc(db, "todo", id);
-		const updatedData = { heading: heading };
+	async function updateHeading(heading) {
+		const docRef = doc(db, "todo", currentUser.uid);
 		try {
-			await updateDoc(docRef, updatedData);
+			await setDoc(docRef, { [heading]: false }, { merge: true });
 		} catch (e) {
 			console.log(e);
 		} finally {
@@ -63,8 +75,9 @@ export function AuthProvider({ children }) {
 	}
 
 	async function deleteTodo(id) {
+		const todoRef = doc(db, "todo", currentUser.uid);
 		try {
-			await deleteDoc(doc(db, "todo", id));
+			await updateDoc(todoRef, { [id]: deleteField() });
 		} catch (error) {
 			console.log(error);
 		}
