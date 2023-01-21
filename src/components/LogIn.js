@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { auth } from "../firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -6,10 +6,12 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 function LogIn(props) {
 	const email = useRef();
 	const password = useRef();
+	const [isLoading, setIsLoading] = useState(false);
 	const { setCurrentUser } = useAuth();
 
 	function submitHandler(e) {
 		e.preventDefault();
+		setIsLoading(true);
 		signInWithEmailAndPassword(
 			auth,
 			email.current.value,
@@ -17,9 +19,11 @@ function LogIn(props) {
 		)
 			.then((user) => {
 				setCurrentUser(user);
+				setIsLoading(false);
 			})
 			.catch((error) => {
 				console.log(error.errorCode, error.errorMessage);
+				setIsLoading(false);
 			});
 	}
 
@@ -51,8 +55,9 @@ function LogIn(props) {
 					<input ref={password} className="w-2/3" type="password" required />
 				</div>
 				<button
+					disabled={isLoading}
 					type="submit"
-					className="h-10 w-4/5 self-end rounded border-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500 md:w-1/4"
+					className="h-10 w-4/5 self-end rounded border-2 border-purple-700 bg-purple-700 text-white hover:bg-purple-500 disabled:cursor-not-allowed md:w-1/4"
 				>
 					Log In
 				</button>
