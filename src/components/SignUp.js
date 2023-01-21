@@ -1,12 +1,21 @@
 import { useRef } from "react";
 import { useAuth } from "../context/AuthContext";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
 
 function SignUp(props) {
 	const email = useRef();
 	const password = useRef();
 	const { setCurrentUser } = useAuth();
+
+	async function createNewUserDoc(id) {
+		await setDoc(
+			doc(db, "todo", id),
+			{ joiningDate: Timestamp.now() },
+			{ merge: true }
+		);
+	}
 
 	function submitHandler(e) {
 		e.preventDefault();
@@ -17,6 +26,8 @@ function SignUp(props) {
 		)
 			.then((userCredential) => {
 				setCurrentUser(userCredential.user);
+				console.log(userCredential.user.uid);
+				createNewUserDoc(userCredential.user.uid);
 			})
 			.catch((error) => {
 				console.log(error.errorCode, error.errorMessage);
